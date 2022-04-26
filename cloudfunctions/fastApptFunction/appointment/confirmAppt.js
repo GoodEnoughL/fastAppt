@@ -28,7 +28,17 @@ exports.main = async (event, context) => {
             stock: newStock
         }
     })
-    return newStock
+    const wxContext = cloud.getWXContext();
+    db.collection("appointment").add({
+        data:{
+            department: event.confirmName,
+            apptDate: event.confirmDate,
+            appttime: event.confirmTime,
+            equipment: event.confirmEquipment,
+            user: wxContext.OPENID
+        }
+    })
+    return wxContext
   }
   catch(e) {
     return e
