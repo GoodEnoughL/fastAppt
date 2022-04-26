@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/appointment/appointment",
+    "pages/index/index",
+    "pages/user/user",
+    "pages/forum/forum",
+    "pages/appointDetail/appointDetail",
+    "pages/successAppt/successAppt",
+    "pages/apptSuccess/apptSuccess"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "快预约系统",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "backgroundColor": "#fefefe",
+    "color": "#999",
+    "selectedColor": "#AE0B2A",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/images/tabbar/home.png",
+        "selectedIconPath": "/images/tabbar/home_cur.png"
+      },
+      {
+        "pagePath": "pages/appointment/appointment",
+        "text": "预约",
+        "iconPath": "/images/tabbar/news.png",
+        "selectedIconPath": "/images/tabbar/news_cur.png"
+      },
+      {
+        "pagePath": "pages/forum/forum",
+        "text": "发现",
+        "iconPath": "/images/tabbar/user.png",
+        "selectedIconPath": "/images/tabbar/user_cur.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "个人中心",
+        "iconPath": "/images/tabbar/my.png",
+        "selectedIconPath": "/images/tabbar/my_cur.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "useExtendedLib": {
+    "weui": true
+  }
+}

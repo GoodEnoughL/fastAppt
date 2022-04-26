@@ -1,0 +1,1 @@
+"D:\EngineerTool\Tencent\微信web开发者工具\cli.bat" cloud functions deploy --e cloud1-5gukdsmgf9c78413 --n quickstartFunctions --r --project "D:\SourceCode\Wechat\FastAppoint" --report_first --report

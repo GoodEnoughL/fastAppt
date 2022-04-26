@@ -1,0 +1,41 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+    <view class="page-body">
+    <view class="page-section page-section-spacing swiper ">
+      <swiper indicator-dots="{{indicatorDots}}"
+        autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" >
+        <block wx:for="{{backgroundData}}" wx:key="*this" class="adBox">
+          <swiper-item>
+            <view class="swiper-item {{item}}"></view>
+            <image src="{{item}}" class="image"></image>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+
+    <view>
+      <view class="indexTitle">快预约场馆系统</view>
+      <view class="home-header-line"></view>
+      <rich-text nodes="{{indexInfo}}"></rich-text>
+    </view>
+
+    <view>
+    <!-- <view class="indexTitle">环境展示</view> -->
+    <view class="indexTitle">场馆环境</view>
+    <view class="home-header-line"></view>
+     <swiper class='swiperClass' autoplay indicator-color="#a39f99" indicator-active-color="#f49641" indicator-dots  interval="2000" duration="1000" previous-margin="30px" next-margin="30px" circular bindchange="bindchange" style='height: {{swiperHeight}}px'>
+      <block wx:for="{{departmentPic}}" wx:key="*this">
+      <swiper-item>
+      <image src="{{item}}" class="slide-image {{swiperIndex == index ? 'active' : 'quiet'}}" mode='aspectFill'>
+      </image>
+      </swiper-item>
+ </block>
+ </swiper>
+
+    </view>
+    
+    </view>
+</view>
+
+
+

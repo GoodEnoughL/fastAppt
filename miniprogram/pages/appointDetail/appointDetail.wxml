@@ -1,0 +1,38 @@
+<!--pages/appointDetail.wxml-->
+
+<!-- <text>pages/appointDetail.wxml       {{dep}}</text> -->
+<van-calendar show="{{ showCalendar }}" bind:close="onCloseCalendar" bind:confirm="onConfirmCalendar" min-date="{{ minDate }}"
+  max-date="{{ maxDate }}" show-confirm="{{false}}" />
+<!-- <van-panel title="请选择日期" desc="预约日期" status="状态">
+  
+</van-panel> -->
+<view class="singleCard" style="margin-top: 10px;"> <van-cell title="选择日期" value="{{ date }}" bind:click="onDisplayCalendar" /> </view>
+
+<view class="singleCard">
+  <van-panel title="请选择时间"  >
+  <view >
+  <view wx:if="{{apptTime && apptTime.length !== 0}}">
+    <block wx:for="{{apptTime}}" >
+      <van-button id="{{item.sec}}" type="default" bind:click="onClickTime">{{item.alias}}</van-button>
+    </block>
+  </view>
+  <van-empty wx:else image="error" description="当日没有时段可预约" />
+</view>
+</van-panel>
+</view>
+
+<view class="singleCard">
+  <van-panel title="请选择设备" >
+  <view>
+  <view wx:if="{{apptEquipment && apptEquipment.length !== 0}}">
+    <block wx:for="{{apptEquipment}}" >
+      <van-button id="{{item}}" type="default" bind:click="onClickEquipment" hover-class="primary">{{item}}</van-button>
+    </block>
+  </view>
+  <view wx:else> <van-empty  image="error" description="当日没有设备可预约" /> </view>
+ </view>
+</van-panel>
+</view>
+
+ <van-button type="primary" bind:click="onClickAppt" block>预约</van-button>
+<view></view>

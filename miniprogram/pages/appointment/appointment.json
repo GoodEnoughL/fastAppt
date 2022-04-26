@@ -1,0 +1,9 @@
+{
+    "navigationBarTitleText": "线上预约",
+    "usingComponents": {
+        "van-button": "@vant/weapp/button/index",
+        "van-image": "@vant/weapp/image/index",
+        "van-overlay": "@vant/weapp/overlay/index",
+        "van-cell": "@vant/weapp/cell/index"
+    }
+}

@@ -1,0 +1,10 @@
+/* pages/appointDetail.wxss */
+/* * {
+  background-color: gray;
+} */
+
+.singleCard {
+  display: block;
+  position: relative;
+  margin-bottom: 10px;
+}

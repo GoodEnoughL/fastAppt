@@ -1,0 +1,4 @@
+<!--pages/successAppt.wxml-->
+<view>
+  <van-empty description="预约成功" />
+</view>
