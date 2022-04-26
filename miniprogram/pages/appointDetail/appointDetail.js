@@ -188,7 +188,7 @@ Page({
         dateName: parseInt(this.data.dateSec)
       } 
     }).then(res=>{
-      console.log("res",res)
+      console.log("getApptWares",res)
       const busstime = []
       if(res.result.data[0]){
         res.result.data[0].stock.forEach(element=>{busstime.push({"sec":element.busstime,"alias": this.getHMData(this.data.dateSec,element.busstime)})})
@@ -196,6 +196,7 @@ Page({
           apptEquipment: res.result.data[0].equipment,
           apptTime: busstime
         })
+        console.log("getApptWares2",this.data.apptEquipment)
       } 
       else {
         this.setData({

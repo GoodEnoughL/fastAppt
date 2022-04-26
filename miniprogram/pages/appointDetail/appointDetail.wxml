@@ -26,7 +26,7 @@
   <view>
   <view wx:if="{{apptEquipment && apptEquipment.length !== 0}}">
     <block wx:for="{{apptEquipment}}" >
-      <van-button id="{{item}}" type="default" bind:click="onClickEquipment" hover-class="primary">{{item}}</van-button>
+      <van-button id="{{item}}" type="default" bind:click="onClickEquipment" >{{item}}</van-button>
     </block>
   </view>
   <view wx:else> <van-empty  image="error" description="当日没有设备可预约" /> </view>
