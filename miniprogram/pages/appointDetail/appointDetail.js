@@ -188,7 +188,7 @@ Page({
         dateName: this.data.dateSec
       } 
     }).then(res=>{
-      console.log(res)
+      console.log("res",res)
       const busstime = []
       if(res.result.data[0]){
         res.result.data[0].stock.forEach(element=>{busstime.push({"sec":element.busstime,"alias": this.getHMData(this.data.dateSec,element.busstime)})})
