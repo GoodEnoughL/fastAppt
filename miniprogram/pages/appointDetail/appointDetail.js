@@ -185,7 +185,7 @@ Page({
       data: {
         type: "getApptWares",
         waresName: this.data.dep,
-        dateName: this.data.dateSec
+        dateName: parseInt(this.data.dateSec)
       } 
     }).then(res=>{
       console.log("res",res)

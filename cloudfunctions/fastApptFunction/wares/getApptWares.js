@@ -10,7 +10,7 @@ exports.main = async (event, context) => {
     .collection("wares")
     .where({
       "name": event.waresName,
-      "busstime": parseInt(event.dateName)
+      "bussdate": event.dateName
     })
     .get();
     return res
