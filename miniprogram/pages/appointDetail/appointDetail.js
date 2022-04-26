@@ -111,11 +111,11 @@ Page({
     this.setData({
       confirmEquipment: options.currentTarget.id
     })
-    console.log(this.data.confirmDate,this.data.confirmTime,this.data.confirmEquipment)
+    //console.log(this.data.confirmDate,this.data.confirmTime,this.data.confirmEquipment)
   },
 
   onClickAppt: function() {
-    console.log(this.data.confirmDate,this.data.confirmTime,this.data.confirmEquipments)
+    console.log(this.data.confirmDate,this.data.confirmTime,this.data.confirmEquipment)
     wx.cloud.callFunction({
       name: "fastApptFunction",
       config: {
@@ -125,7 +125,7 @@ Page({
         type: "confirmAppt",
         confirmName: this.data.dep,
         confirmDate: this.data.confirmDate,
-        confirmTime: this.data.confirmTime,
+        confirmTime: parseInt(this.data.confirmTime),
         confirmEquipment: this.data.confirmEquipment
       }
     }).then(res=>{
@@ -193,7 +193,7 @@ Page({
       if(res.result.data[0]){
         res.result.data[0].stock.forEach(element=>{busstime.push({"sec":element.busstime,"alias": this.getHMData(this.data.dateSec,element.busstime)})})
         this.setData({
-          apptEquipment: Array.from(res.result.data[0].equipment),
+          apptEquipment: res.result.data[0].equipment,
           apptTime: busstime
         })
       } 
