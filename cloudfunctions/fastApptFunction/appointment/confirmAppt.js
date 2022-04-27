@@ -16,7 +16,10 @@ exports.main = async (event, context) => {
     const newStock = res.data[0].stock
     newStock.map(x=>{
         if(x.busstime == event.confirmTime && x.equipment == event.confirmEquipment){
-            x.surplus--
+            if(x.surplus <= 0){
+                throw new Error()
+            }
+            else x.surplus--
         }
     })
     db.collection("wares")
@@ -38,9 +41,9 @@ exports.main = async (event, context) => {
             user: wxContext.OPENID
         }
     })
-    return wxContext
+    return "success"
   }
   catch(e) {
-    return e
+    return "fail"
   }
 };
