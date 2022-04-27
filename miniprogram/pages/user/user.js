@@ -103,8 +103,10 @@ Page({
 
   toOrderListPage: function(e) {
     var sts = e.currentTarget.dataset.sts;
+    console.log("toOrderListPage:",e)
+    const url = '/pages/apptIndex/apptIndex?status=' + e.currentTarget.id
     wx.navigateTo({
-      url: '/pages/apptIndex/apptIndex'
+      url: url
     })
   },
   /**

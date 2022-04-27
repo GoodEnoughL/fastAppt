@@ -2,10 +2,13 @@
 <view>
 <view>
   <block wx:for="{{appointment}}">
-    <van-card
-      desc="{{item.dateDes}}"
-      title="{{item.alias}}"
-    />
+    <view wx:if="{{status =='allAppt' || status == item.status }}">
+      <van-card desc="{{item.dateDes}}" title="{{item.alias}}">
+        <view slot="footer" wx:if="{{status=='pendingAppt'}}">
+          <van-button size="mini">取消</van-button>
+        </view>
+      </van-card>
+    </view>
   </block>
 </view>
   

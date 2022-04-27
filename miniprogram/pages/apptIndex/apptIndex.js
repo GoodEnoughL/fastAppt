@@ -8,14 +8,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    appointment: []
+    appointment: [],
+    status: "allAppt"
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      status: options.status
+    })
   },
 
   /**
@@ -84,9 +87,11 @@ Page({
       appointment.map(x=>{
         let ddes = parseInt(x.apptDate)+parseInt(x.appttime)*1000
         x.dateDes =this.timestampToTime(new Date(ddes)) 
+        if(Date.now() > ddes) x.status = 'expireAppt'
+        else x.status = 'pendingAppt'
       })
       this.setData({
-        appointment: appointment
+        appointment: appointment   
       })
       console.log("res",appointment)
     },err=>{

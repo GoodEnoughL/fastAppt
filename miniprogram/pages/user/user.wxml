@@ -20,23 +20,23 @@
     <view class='total-order'>
       <view class='order-tit'>
         <text style='font-weight:bold'>我的预约</text>
-        <view class='checkmore' bindtap='toOrderListPage' data-sts="0">
+        <view class='checkmore' id="allAppt" bindtap='toOrderListPage' data-sts="0">
           <text>查看全部 </text>
           <text class='arrowhead'></text>
         </view>
       </view>
       <view class='procedure'>
-        <view class='items' bindtap='toOrderListPage' data-sts="1">
+        <view class='items' id="pendingAppt" bindtap='toOrderListPage' data-sts="1">
           <image src='../../images/icon/toPay.png'></image>
           <text>待进入</text>
           <text class='num-badge' wx:if="{{orderAmount.unPay>0}}">{{orderAmount.unPay}}</text>
         </view>
-        <view class='items' bindtap='toOrderListPage' data-sts="3">
+        <view class='items' id="expireAppt" bindtap='toOrderListPage' data-sts="3">
           <image src='../../images/icon/toTake.png'></image>
           <text>已过期</text>
           <text class='num-badge' wx:if="{{orderAmount.consignment>0}}">{{orderAmount.consignment}}</text>
         </view>
-        <view class='items' bindtap='toOrderListPage' data-sts="5">
+        <view class='items' id="fulfilledAppt" bindtap='toOrderListPage' data-sts="5">
           <image src='../../images/icon/toComment.png'></image>
           <text>已完成</text>
         </view>
