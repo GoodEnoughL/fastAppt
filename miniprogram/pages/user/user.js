@@ -104,7 +104,7 @@ Page({
   toOrderListPage: function(e) {
     var sts = e.currentTarget.dataset.sts;
     wx.navigateTo({
-      url: '/pages/orderList/orderList?sts=' + sts,
+      url: '/pages/apptIndex/apptIndex'
     })
   },
   /**

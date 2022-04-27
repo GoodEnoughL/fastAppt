@@ -1,0 +1,12 @@
+<!--pages/apptIndex/apptIndex.wxml-->
+<view>
+<view>
+  <block wx:for="{{appointment}}">
+    <van-card
+      desc="{{item.dateDes}}"
+      title="{{item.alias}}"
+    />
+  </block>
+</view>
+  
+</view>

@@ -146,9 +146,7 @@ Page({
 
 
   getEquipmentInfo: function() {
-    // wx.cloud.callFunction({
-    //   name: ""
-    // })
+
   },
 
   getApptConfig: function() {

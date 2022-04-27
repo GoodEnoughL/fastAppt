@@ -1,12 +1,13 @@
 {
   "pages": [
+    "pages/user/user",
     "pages/appointment/appointment",
     "pages/index/index",
-    "pages/user/user",
     "pages/forum/forum",
     "pages/appointDetail/appointDetail",
     "pages/successAppt/successAppt",
-    "pages/apptSuccess/apptSuccess"
+    "pages/apptSuccess/apptSuccess",
+    "pages/apptIndex/apptIndex"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

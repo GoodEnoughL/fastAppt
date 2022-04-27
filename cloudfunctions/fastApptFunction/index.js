@@ -5,6 +5,7 @@ const indexPic = require("./index/indexPic/indexPic.js")
 const getApptConfig = require("./department/getApptConfig.js")
 const getApptWares = require("./wares/getApptWares")
 const confirmAppt = require("./appointment/confirmAppt")
+const getApptIndex = require("./appointment/getApptIndex")
 // department
 const getDepartment = require("./department/getDepartment.js")
 exports.main = async (event, context) => {
@@ -23,6 +24,8 @@ exports.main = async (event, context) => {
         return await getApptWares.main(event,context);
     case 'confirmAppt':
         return await confirmAppt.main(event,context);
+    case 'getApptIndex':
+        return await getApptIndex.main(event,context);
     default:
       return "success";
   }
