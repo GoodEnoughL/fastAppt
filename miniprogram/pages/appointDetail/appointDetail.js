@@ -129,13 +129,15 @@ Page({
         confirmEquipment: this.data.confirmEquipment
       }
     }).then(res=>{
-      console.log(res)
+      console.log("onClickAppt:",res.result)
+      const url = '/pages/apptSuccess/apptSuccess?status='+ res.result
+      console.log("url:",url)
       wx.navigateTo({
-        url: '/pages/apptSuccess/apptSuccess',
+        url: url
       })
     },err=>{
       wx.navigateTo({
-        url: '/pages/apptSuccess/apptSuccess',
+        url: '/pages/apptSuccess/apptSuccess?status=fail'
       })
     })
   },
