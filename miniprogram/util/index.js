@@ -11,7 +11,12 @@ function getLocaleDateZone() {
   return new Date(new Date().toDateString()).getTime()
 }
 
+function toUTC8DateZone(utc0) {
+  return utc0 - 28800000
+}
+
 module.default = {
   getHMData,
-  getLocaleDateZone
+  getLocaleDateZone,
+  toUTC8DateZone
 }
