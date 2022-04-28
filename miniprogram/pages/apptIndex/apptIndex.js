@@ -82,7 +82,7 @@ Page({
         type: "getApptIndex",
       }
     }).then(res=>{
-      
+      console.log("getApptIndex",res)
       const appointment = res.result.data
       appointment.map(x=>{
         let ddes = parseInt(x.apptDate)+parseInt(x.appttime)*1000

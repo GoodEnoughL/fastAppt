@@ -1,8 +1,8 @@
 <!--pages/apptIndex/apptIndex.wxml-->
 <view>
 <view>
-  <block wx:for="{{appointment}}">
-    <view wx:if="{{status =='allAppt' || status == item.status }}">
+  <block wx:for="{{appointment}}" wx:key="{{dateDes}}">
+    <view wx:if="{{status =='allAppt' || status == item.status }}" >
       <van-card desc="{{item.dateDes}}" title="{{item.alias}}">
         <view slot="footer" wx:if="{{status=='pendingAppt'}}">
           <van-button size="mini">取消</van-button>
