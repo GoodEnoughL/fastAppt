@@ -21,18 +21,18 @@
         </view>
     </view>
     <view wx:if="{{data.comment.length>0}}">
-        <view wx:for="{{data.comment}}" wx:key="{{index}}">
+        <view wx:for="{{comment}}" wx:key="_id">
             <view class="comment">
                 <view class="aComment">
                     <view class="commentUserInfo">
-                        <image class="commentUserImg" mode="aspectFit" src="{{item.commentUserImg}}"></image>
+                        <image class="commentUserImg" mode="aspectFit" src="{{item.topicUserImg}}"></image>
                         <view class="commentUserNAT">
-                            <text class="commentUserName">{{item.commentUserName}}</text>
-                            <text class="userCommentTime">{{item.commentTime}}</text>
+                            <text class="commentUserName">{{item.topicUser}}</text>
+                            <text class="userCommentTime">{{item.topicTime}}</text>
                         </view>
                     </view>
                     <view style="overflow-wrap: break-word;margin-left: 80rpx;">
-                        <text selectable="true" style="font-size: 28rpx;">{{item.comment}}</text>
+                        <text selectable="true" style="font-size: 28rpx;">{{item.topicName}}</text>
                     </view>
                 </view>
             </view>

@@ -1,11 +1,11 @@
 // pages/Topic/Topic/Topic.js
-var db = wx.cloud.database();
+const db = wx.cloud.database({env:"cloud1-5gukdsmgf9c78413"});
 
 var _ = db.command;
 
 var app = getApp();
 
-var util = require("../../../utils/util.js");
+var util = require("../../../util/util");
 
 Page({
     /**
@@ -19,40 +19,62 @@ Page({
     /**
    * 生命周期函数--监听页面加载
    */
-    onLoad: function onLoad(options) {
+    onLoad:async function onLoad(options) {
+        const _this = this
         if (options.topicId) {
             this.setData({
                 topicId: options.topicId
             });
             // console.log(options.topicId)
-            this.search(options.topicId);
+            await this.search(options.topicId);
+            
             var topicId;
             wx.setStorageSync("topicId", topicId);
         }
     },
-    search: function search(id) {
+    search:async function search(id) {
         var _this = this;
-        // let idNum = 0;
-        // if (Number(id) || Number(id) == 0)
-        //   idNum = Number(id)
-        // else
-        //   idNum = this.data.topicId;
-                id = this.data.topicId;
+        id = this.data.topicId;
         db.collection("topic").where({
-            // topicid: _.eq(idNum)
             topicId: id
-        }).get({
-            success: function success(res) {
-                // console.log(res)
-                var D = res.data;
-                _this.setData({
-                    data: D[0]
-                });
-            },
-            fail: function fail(e) {
-                // console.log(e)
+        }).get().then(res=>{
+            var D = res.data;
+            _this.setData({
+                data: D[0]
+            });
+            console.log("onLoad",this.data.data)
+            let promiseArr = []
+            if(this.data.data.topicCommentNum && this.data.data.topicCommentNum > 0){
+                for(let i = 0; i < this.data.data.topicCommentNum;i++){
+                    // let commentPromise = new Promise((resolve, reject) => {
+                        
+                    //   })
+                    // promiseArr.push(commentPromise)
+                    this.getCommentById(this.data.data.comment[i])
+                }
             }
-        });
+            // console.log("promiseArr1:",promiseArr)
+            // return Promise.all(promiseArr)
+        }).catch(err=>{
+            console.log(err)
+        })
+    },
+
+    getCommentById: function getCommentById(commentId) {
+        console.log("getCommentById：",commentId)
+        db.collection("topic").where({
+            topicId: commentId
+        }).get().then(res=>{
+            var D = res.data;
+                let comment = this.data.comment
+                comment.push(D[0])
+                this.setData({
+                    comment: comment
+                })
+                console.log("commnet:",comment)
+        },err=>{
+            console.log(err)
+        })
     },
     /**
    * 生命周期函数--监听页面初次渲染完成

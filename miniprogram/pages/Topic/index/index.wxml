@@ -4,7 +4,7 @@
       <l-tabpanel key="0" slot="0" tab="最新">
         <view class="tapView">
           <scroll-view scrollY bindscroll="scrolltoupper" class="scrollView" scrollTop="{{topNum}}">
-            <view bindtap="toOneTopic" class="onrCardView" data-id="{{item.topicId}}" id="tapTest" wx:for="{{topic}}" wx:key="{{index}}">
+            <view bindtap="toOneTopic" class="onrCardView" data-id="{{item.topicId}}" id="tapTest" wx:for="{{topic}}" wx:key="_id">
               <l-card lClass="card" plaintext="true" type="primary">
                 <view>
                   <view class="topicUserInfo">
@@ -32,7 +32,7 @@
       <l-tabpanel key="1" slot="1" tab="最热">
         <view class="tapView">
           <scroll-view scrollY bindscroll="scrolltoupper" class="scrollView" scrollTop="{{topNum}}">
-            <view bindtap="toOneTopic" class="onrCardView" data-id="{{item.topicId}}" id="tapTest" wx:for="{{topic}}" wx:key="{{index}}">
+            <view bindtap="toOneTopic" class="onrCardView" data-id="{{item.topicId}}" id="tapTest" wx:for="{{topic}}" wx:key="_id">
               <l-card lClass="card" plaintext="true" type="primary">
                 <view>
                   <view class="topicUserInfo">
