@@ -1,0 +1,6 @@
+{
+    "usingComponents": {
+        "l-card": "../../../dist/Lin/card/index",
+        "l-icon": "../../../dist/Lin/icon/index"
+    }
+}

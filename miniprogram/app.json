@@ -1,5 +1,9 @@
 {
   "pages": [
+    "pages/Topic/index/index",
+    "pages/Topic/oneTopic/oneTopic",
+    "pages/Topic/addTopic/addTopic",
+    "pages/Topic/Topic/Topic",
     "pages/index/index",
     "pages/user/user",
     "pages/appointment/appointment",
@@ -10,6 +14,7 @@
     "pages/apptIndex/apptIndex"
   ],
   "window": {
+  
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
@@ -48,6 +53,7 @@
     ]
   },
   "sitemapLocation": "sitemap.json",
+  
   "useExtendedLib": {
     "weui": true
   }
