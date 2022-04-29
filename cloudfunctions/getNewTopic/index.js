@@ -1,6 +1,6 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-cloud.init({env:'cloud1-5gukdsmgf9c78413'})
+cloud.init({env: "cloud1-5gukdsmgf9c78413"})
 const db = cloud.database()
 const _ = db.command
 
@@ -15,7 +15,6 @@ exports.main = async (event, context) => {
         }
       });
   } catch (e) {
-    //console.error(e);
     return e
   }
 }

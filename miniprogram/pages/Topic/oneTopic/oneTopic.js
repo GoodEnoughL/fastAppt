@@ -25,7 +25,7 @@ Page({
                 topicId: options.topicId
             });
             // console.log(options.topicId)
-                        this.search(options.topicId);
+            this.search(options.topicId);
             var topicId;
             wx.setStorageSync("topicId", topicId);
         }
