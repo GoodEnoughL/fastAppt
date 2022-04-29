@@ -23,12 +23,16 @@ Page({
     });
     wx.cloud.callFunction({
       name: "getNewTopic",
-      complete: function complete(res) {
-        // console.log("getNewTopic", res)
-        _this.setData({
-          topic: res.result.data
-        });
-      }
+      config: {
+        env: "cloud1-5gukdsmgf9c78413"
+      },
+    }).then(res=>{
+      console.log("getNewTopic", res)
+      _this.setData({
+        topic: res.result.data
+      });
+    },err=>{
+      console.log('topiconShow:',err)
     });
   },
   /**

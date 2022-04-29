@@ -38,7 +38,7 @@
         "selectedIconPath": "/images/tabbar/news_cur.png"
       },
       {
-        "pagePath": "pages/forum/forum",
+        "pagePath": "pages/Topic/index/index",
         "text": "发现",
         "iconPath": "/images/tabbar/user.png",
         "selectedIconPath": "/images/tabbar/user_cur.png"
