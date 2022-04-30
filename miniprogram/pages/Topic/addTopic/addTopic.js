@@ -127,5 +127,7 @@ Page({
         // console.log(topicId)
                 wx.setStorageSync("topicId", topicId);
         return topicId;
-    }
+    },
+
+    
 });

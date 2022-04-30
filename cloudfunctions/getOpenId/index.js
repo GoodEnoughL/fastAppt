@@ -1,13 +1,17 @@
-// 云函数入口文件
-const cloud = require('wx-server-sdk')
-cloud.init()
-const db = cloud.database()
-const _ = db.command
+const cloud = require('wx-server-sdk');
 
-// 云函数入口函数
-  exports.main = async (event, context) => {
-    console.log(event)
-    console.log(context)
-    return event.userInfo; //返回用户信息
-    //返回用户信息
-}
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV
+});
+
+// 获取openId云函数入口函数
+exports.main = async (event, context) => {
+  // 获取基础信息
+  const wxContext = cloud.getWXContext();
+
+  return {
+    openid: wxContext.OPENID,
+    appid: wxContext.APPID,
+    unionid: wxContext.UNIONID,
+  };
+};

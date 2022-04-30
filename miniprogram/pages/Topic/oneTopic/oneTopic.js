@@ -110,7 +110,7 @@ Page({
         var _ = db.command;
         var userId = wx.getStorageSync("userId");
         // 评论Id
-                var commentId = null;
+        var commentId = null;
         if (!commentId) {
             commentId = this.getCommentId();
         }

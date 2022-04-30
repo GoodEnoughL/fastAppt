@@ -67,6 +67,12 @@ Page({
 
   },
 
+  onSetClick: function onSetClick() {
+    wx.navigateTo({
+      url: "/pages/set/index/index"
+    });
+  },
+
   toDistCenter: function () {
     wx.showToast({
       icon: "none",
