@@ -88,7 +88,8 @@ Page({
             topicUser: wx.getStorageSync("userName"),
             topicUserImg: wx.getStorageSync("userImg"),
             topicCommentNum: 0,
-            topicTime: d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds(),
+            // topicTime: d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds(),
+            topicTime: Date.now(),
             comment: [],
             topicId: wx.getStorageSync("topicId")
         };
@@ -101,7 +102,7 @@ Page({
                     });
                     setTimeout(function() {
                         wx.switchTab({
-                            url: "/pages/Topic/Topic/Topic"
+                            url: "/pages/Topic/index/index"
                         });
                     }, 1e3);
                 },
