@@ -1,3 +1,4 @@
+const { envId } = require("../../../envList")
 Page({
   /**
  * 页面的初始数据
@@ -17,6 +18,7 @@ Page({
  * 生命周期函数--监听页面显示
  */
   onShow: function onShow() {
+    console.log("topicIndex:",envId)
     var _this = this;
     wx.cloud.init({
       traceUser: true
@@ -24,7 +26,7 @@ Page({
     wx.cloud.callFunction({
       name: "getNewTopic",
       config: {
-        env: "cloud1-5gukdsmgf9c78413"
+        env: envId
       },
     }).then(res=>{
       console.log("getNewTopic", res)
@@ -63,7 +65,7 @@ Page({
     wx.cloud.callFunction({
       name: "getHotTopic",
       config: {
-        env: "cloud1-5gukdsmgf9c78413"
+        env: envId
       },
       complete: function complete(res) {
         console.log("getHotTopic",res)
@@ -82,7 +84,7 @@ Page({
     wx.cloud.callFunction({
       name: "getNewTopic",
       config: {
-        env: "cloud1-5gukdsmgf9c78413"
+        env: envId
       },
       complete: function complete(res) {
         // console.log("getNewTopic", res)
