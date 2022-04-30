@@ -1,6 +1,6 @@
 var app = getApp();
 
-var db = wx.cloud.database();
+var db = wx.cloud.database({env:"cloud1-5gukdsmgf9c78413"});
 
 var _ = db.command;
 
@@ -101,7 +101,7 @@ Page({
                     });
                     setTimeout(function() {
                         wx.switchTab({
-                            url: "../index/index"
+                            url: "/pages/Topic/Topic/Topic"
                         });
                     }, 1e3);
                 },
@@ -109,7 +109,7 @@ Page({
                     wx.showToast({
                         title: "发布错误"
                     });
-                    // console.log(e)
+                    console.log("发布",e)
                                 }
             });
         } else {
