@@ -62,8 +62,11 @@ Page({
     });
     wx.cloud.callFunction({
       name: "getHotTopic",
+      config: {
+        env: "cloud1-5gukdsmgf9c78413"
+      },
       complete: function complete(res) {
-        // console.log("getHotTopic",res)
+        console.log("getHotTopic",res)
         _this2.setData({
           topic: res.result.data
         });
@@ -78,6 +81,9 @@ Page({
     });
     wx.cloud.callFunction({
       name: "getNewTopic",
+      config: {
+        env: "cloud1-5gukdsmgf9c78413"
+      },
       complete: function complete(res) {
         // console.log("getNewTopic", res)
         _this3.setData({
