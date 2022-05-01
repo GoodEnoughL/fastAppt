@@ -1,6 +1,7 @@
 // pages/user/user.js
 
 //var http = require("../../utils/http.js");
+const { envId } = require("../../envList")
 Page({
 
   /**
@@ -12,6 +13,7 @@ Page({
     collectionCount: 0,
     userInfoGridStatus: "false",
     openid: "",
+    userName: "",
     isHide: true
   },
 
@@ -19,6 +21,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    // 获得当前用户openid，如果当前用户曾经登录，则直接从本地缓存拉取资料
     this.getOpenid();
     var openid = this.data.openid,
     userId = wx.getStorageSync("userId"), 
@@ -146,16 +149,12 @@ Page({
     console.log("getUserInfoClick:",e)
     var _this = this;
     var d = e.detail.userInfo;
-    this.setData({
-      userImg: d.avatarUrl,       
-      isHide: false
-    });
-    wx.setStorageSync("userName", d.nickName);
-    wx.setStorageSync("userImg", d.avatarUrl);
-    var db = wx.cloud.database();
+    
+    var db = wx.cloud.database({env:"cloud1-5gukdsmgf9c78413"});
     var _ = db.command;
+    // console.log()
     db.collection("user").where({
-      openid: this.data.openid
+      openId: this.data.openid
     }).get({
       success: function success(res) {
         console.log("查询用户:", res);
@@ -163,48 +162,53 @@ Page({
           console.log("已存在");
           wx.setStorageSync("userId", res.data[0].userId);
           wx.setStorageSync("openId", res.data[0].openid);
+          _this.setData({
+            userImg: d.avatarUrl,    
+            userName: d.nickName,
+            isHide: false
+          });
+          console.log(":dd",d)
+          wx.setStorageSync("userName", d.nickName);
+          wx.setStorageSync("userImg", d.avatarUrl);
           console.log(res.data[0].userId);
-        } else {
-          setTimeout(function () {
-            var userImg = d.avatarUrl,
-              userName = d.userName,
-              userId;
-            if (!userId) {
-              userId = _this.getUserId();
-            }
-            // db.collection("user").add({
-            //   data: {
-            //     userId: userId,
-            //     userImg: userImg,
-            //     userName: userName,
-            //     iv: d.iv
-            //   },
-            wx.cloud.callFunction({
-              name: 'addUser',
-              data: {
-                userId: userId,
-                userImg: userImg,
-                userName: userName,
-              },
-              success: function success(res) {
-                wx.showToast({
-                  title: "注册成功"
-                });
-                console.log('云addUser: ', res,res.result.openid)
-                console.log("用户新增成功");
-                db.collection("users").where({
-                  userId: userId
-                }).get({
-                  success: function success(res) {
-                    wx.setStorageSync("openId", res.data[0]._openid);
-                  },
-                  fail: function fail(err) {
-                    console.log("openId缓存失败");
-                  }
-                });
-              }
-            });
-          }, 100);
+        } 
+        else {
+          wx.navigateTo({
+            url: '/pages/login/login',
+          })
+          // setTimeout(function () {
+          //   var userImg = d.avatarUrl,
+          //     userName = d.userName,
+          //     userId;
+          //   if (!userId) {
+          //     userId = _this.getUserId();
+          //   }
+          //   wx.cloud.callFunction({
+          //     name: 'addUser',
+          //     data: {
+          //       userId: userId,
+          //       userImg: userImg,
+          //       userName: userName,
+          //     },
+          //     success: function success(res) {
+          //       wx.showToast({
+          //         title: "注册成功"
+          //       });
+          //       console.log('云addUser: ', res,res.result.openid)
+          //       console.log("用户新增成功");
+          //       db.collection("users").where({
+          //         userId: userId
+          //       }).get({
+          //         success: function success(res) {
+          //           wx.setStorageSync("openId", res.data[0]._openid);
+          //         },
+          //         fail: function fail(err) {
+          //           console.log("openId缓存失败");
+          //         }
+          //       });
+          //     }
+          //   });
+          // }, 100);
         }
       }
     });
@@ -220,7 +224,7 @@ Page({
         env: "cloud1-5gukdsmgf9c78413"
       },
       complete: function complete(res) {
-        console.log("云函数获取到的openid: ", res);
+        // console.log("云函数获取到的openid: ", res);
         var openid = res.result.openid;
         _this2.setData({
           openid: openid
