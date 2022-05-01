@@ -13,7 +13,7 @@
                     </view>
                     <view class="topicUserInfoNAT">
                       <text class="topicUserInfoName">{{item.topicUser}}</text>
-                      <text class="topicUserInfoTime">{{item.topicTime}}</text>
+                      <text class="topicUserInfoTime">{{item.formaTopictTime}}</text>
                     </view>
                   </view>
                   <view class="topicItem">{{item.topicName}}</view>
@@ -41,7 +41,7 @@
                     </view>
                     <view class="topicUserInfoNAT">
                       <text class="topicUserInfoName">{{item.topicUser}}</text>
-                      <text class="topicUserInfoTime">{{item.topicTime}}</text>
+                      <text class="topicUserInfoTime">{{item.formatTopicTime}}</text>
                     </view>
                   </view>
                   <view class="topicItem">{{item.topicName}}</view>

@@ -6,6 +6,7 @@ var _ = db.command;
 var app = getApp();
 
 var util = require("../../../util/util");
+const { timestampToTime }= require("../../../util/index.js")
 
 Page({
     /**
@@ -39,6 +40,8 @@ Page({
             topicId: id
         }).get().then(res=>{
             var D = res.data;
+            console.log('D:',D)
+            D[0].formatTopicTime = timestampToTime(D[0].topicTime)
             _this.setData({
                 data: D[0]
             });
@@ -53,8 +56,6 @@ Page({
                     this.getCommentById(this.data.data.comment[i])
                 }
             }
-            // console.log("promiseArr1:",promiseArr)
-            // return Promise.all(promiseArr)
         }).catch(err=>{
             console.log(err)
         })
@@ -66,12 +67,13 @@ Page({
             topicId: commentId
         }).get().then(res=>{
             var D = res.data;
-                let comment = this.data.comment
-                comment.push(D[0])
-                this.setData({
-                    comment: comment
-                })
-                console.log("commnet:",comment)
+            let comment = this.data.comment
+            D[0].formatTopicTime = timestampToTime(D[0].topicTime)
+            comment.push(D[0])
+            this.setData({
+                comment: comment
+            })
+            console.log("commnet:",comment)
         },err=>{
             console.log(err)
         })

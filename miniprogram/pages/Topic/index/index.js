@@ -1,4 +1,5 @@
 const { envId } = require("../../../envList")
+const { timestampToTime }= require("../../../util/index.js")
 Page({
   /**
  * 页面的初始数据
@@ -6,7 +7,7 @@ Page({
   data: {
     topNum: 0
   },
-  /**
+  /**  
  * 生命周期函数--监听页面加载
  */
   onLoad: function onLoad(options) { },
@@ -29,7 +30,12 @@ Page({
         env: envId
       },
     }).then(res=>{
-      console.log("getNewTopic", res)
+      // console.log("getNewTopic", timestampToTime )
+      if(res.result.data){
+        for(let index in res.result.data){
+          res.result.data[index].formaTopictTime = timestampToTime(res.result.data[index].topicTime)
+        }
+      }
       _this.setData({
         topic: res.result.data
       });
@@ -68,7 +74,12 @@ Page({
         env: envId
       },
       complete: function complete(res) {
-        console.log("getHotTopic",res)
+        // console.log("getHotTopic",res)
+        if(res.result.data){
+          for(let index in res.result.data){
+            res.result.data[index].formatTopicTime = timestampToTime(res.result.data[index].topicTime)
+          }
+        }
         _this2.setData({
           topic: res.result.data
         });

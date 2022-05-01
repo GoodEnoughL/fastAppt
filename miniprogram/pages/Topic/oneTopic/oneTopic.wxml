@@ -7,7 +7,7 @@
                         <image class="topicUserImg" mode="aspectFit" src="{{data.topicUserImg}}"></image>
                         <view class="topictUserNAT">
                             <text class="topicUserName">{{data.topicUser}}</text>
-                            <text class="topicTime">{{data.topicTime}}</text>
+                            <text class="topicTime">{{data.formatTopicTime}}</text>
                         </view>
                     </view>
                     <view class="topicItem">{{data.topicName}}</view>
@@ -28,7 +28,7 @@
                         <image class="commentUserImg" mode="aspectFit" src="{{item.topicUserImg}}"></image>
                         <view class="commentUserNAT">
                             <text class="commentUserName">{{item.topicUser}}</text>
-                            <text class="userCommentTime">{{item.topicTime}}</text>
+                            <text class="userCommentTime">{{item.formatTopicTime}}</text>
                         </view>
                     </view>
                     <view style="overflow-wrap: break-word;margin-left: 80rpx;">
