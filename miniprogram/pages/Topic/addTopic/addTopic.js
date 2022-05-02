@@ -1,5 +1,4 @@
 var app = getApp();
-
 var db = wx.cloud.database({env:"cloud1-5gukdsmgf9c78413"});
 
 var _ = db.command;

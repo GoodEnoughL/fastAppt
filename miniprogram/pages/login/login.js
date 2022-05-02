@@ -1,4 +1,6 @@
 // pages/login/login.js
+const { envId } = require("../../envList")
+var db = wx.cloud.database({env: envId});
 const App = getApp()
 Page({
 
@@ -7,16 +9,16 @@ Page({
    */
   data: {
     motto: '欢迎登录WXapp',
-    userName: '',
+    userId: '',
     userPassword: '',
     userInfo: {},
     id_token: '',//方便存在本地的locakStorage
     response: '' //存取返回数据
   },
 
-  userNameInput: function (e) {
+  userIdInput: function (e) {
     this.setData({
-      userName: e.detail.value
+      userId: e.detail.value
     })
   },
   userPasswordInput: function (e) {
@@ -24,32 +26,53 @@ Page({
       userPassword: e.detail.value
     })
   },
-  logIn: function () {
+  logIn: function (e) {
     var that = this
-    wx.request({
-      url: App.globalData.Url +'/infor/manager/lionMuscle/login',
+    // wx.getUserInfo({
+    //   success: function(res) {
+    //     this.setData({
+    //       userInfo: res.userInfo
+    //     })
+    //   }
+    // })
+    // console.log("userInfo:",that.data.userInfo)
+    const userName = wx.getStorageSync('userName')
+    wx.cloud.callFunction({
+      name: 'fastApptFunction',
       data: {
-        userName: this.data.userName,
+        type: 'loginAndBindId',
+        userId: this.data.userId,
         userPassword: this.data.userPassword,
+        userName: userName
       },
-      method: 'POST',
       success: function (res) {
-        if(res.data.code == 200){
-          wx.setStorageSync('access-token',res.data.token)
+        // if(res)
+        console.log("logIn:",res)
+        if(res.result.status === 'success'){
           wx.showToast({
             title: '登录成功',
           })
-          wx.navigateBack({})
-        }
-        else{
+          wx.setStorageSync('userId',that.data.userId)
+          wx.setStorageSync("openId", res.result.openId);
+
+          wx.switchTab({
+            url: "/pages/index/index"
+          })
+        } else {
+          wx.setStorageSync("userName", "");
+          wx.setStorageSync("userImg", "");
           wx.showToast({
-            icon: 'none',
-            title: '登录失败',
+            title: res.result.status,
           })
         }
+        
       },
-      fail: function (res) {
-        console.log('is failed')
+      fail: function (err) {
+        wx.setStorageSync("userName", "");
+        wx.setStorageSync("userImg", "");
+        wx.showToast({
+          title: "fail",
+        })
       }
     })
   },
@@ -72,7 +95,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**

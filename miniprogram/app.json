@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/login/login",
-    
     "pages/user/user",
     "pages/set/index/index",
     "pages/about/meAbout/meAbout",
@@ -10,6 +9,8 @@
     "pages/Topic/addTopic/addTopic",
     "pages/Topic/Topic/Topic",
     "pages/index/index",
+    
+
 
     "pages/appointment/appointment",
     "pages/forum/forum",

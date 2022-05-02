@@ -149,9 +149,10 @@ Page({
     console.log("getUserInfoClick:",e)
     var _this = this;
     var d = e.detail.userInfo;
-    
     var db = wx.cloud.database({env:"cloud1-5gukdsmgf9c78413"});
     var _ = db.command;
+    wx.setStorageSync("userName", d.nickName);
+    wx.setStorageSync("userImg", d.avatarUrl);
     // console.log()
     db.collection("user").where({
       openId: this.data.openid
@@ -162,15 +163,14 @@ Page({
           console.log("已存在");
           wx.setStorageSync("userId", res.data[0].userId);
           wx.setStorageSync("openId", res.data[0].openid);
+          
           _this.setData({
             userImg: d.avatarUrl,    
             userName: d.nickName,
             isHide: false
           });
-          console.log(":dd",d)
-          wx.setStorageSync("userName", d.nickName);
-          wx.setStorageSync("userImg", d.avatarUrl);
-          console.log(res.data[0].userId);
+          // console.log(":dd",d)
+          // console.log(res.data[0].userId);
         } 
         else {
           wx.navigateTo({
