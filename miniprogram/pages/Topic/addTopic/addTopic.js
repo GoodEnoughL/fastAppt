@@ -42,11 +42,14 @@ Page({
                 title: "您还未登录,请先登录~",
                 icon: "none"
             });
-            setTimeout(function() {
-                wx.switchTab({
-                    url: "../../me/index/index"
-                });
-            }, 1500);
+            // setTimeout(function() {
+            //     wx.switchTab({
+            //         url: "../../me/index/index"
+            //     });
+            // }, 1500);
+            wx.switchTab({
+              url: '/pages/user/user',
+            })
         } else {
             // console.log(userId)
         }

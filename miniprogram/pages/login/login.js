@@ -54,7 +54,6 @@ Page({
           })
           wx.setStorageSync('userId',that.data.userId)
           wx.setStorageSync("openId", res.result.openId);
-
           wx.switchTab({
             url: "/pages/index/index"
           })
@@ -71,7 +70,7 @@ Page({
         wx.setStorageSync("userName", "");
         wx.setStorageSync("userImg", "");
         wx.showToast({
-          title: "fail",
+          title: err,
         })
       }
     })

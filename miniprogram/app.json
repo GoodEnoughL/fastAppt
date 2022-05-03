@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/appointment/appointment",
     "pages/login/login",
     "pages/user/user",
     "pages/set/index/index",
@@ -12,7 +13,7 @@
     
 
 
-    "pages/appointment/appointment",
+    
     "pages/forum/forum",
     "pages/appointDetail/appointDetail",
     "pages/successAppt/successAppt",

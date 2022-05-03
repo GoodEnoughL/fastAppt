@@ -17,7 +17,6 @@ exports.main = async (event, context) => {
       if(res.data[0].password == event.userPassword){
         db.collection('user').where({
           userId: event.userId,
-          userName: event.userName
         }).update({
           openId: openId
         })
@@ -35,6 +34,7 @@ exports.main = async (event, context) => {
   }
   catch(e) {
     result.status = "error"
+    result.reason = e
     return result
   }
 };
