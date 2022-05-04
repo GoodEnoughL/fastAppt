@@ -13,6 +13,7 @@ Page({
     showCalendar: false,
     apptTime: [],
     apptEquipment: [],
+    depAlias: '',
     minDate: "",
     maxDate: "",
     defaultDate: "",
@@ -117,7 +118,7 @@ Page({
   },
 
   onClickAppt: function() {
-    console.log(this.data.confirmDate,this.data.confirmTime,this.data.confirmEquipment)
+    console.log("clicj",this.data)
     const userId = wx.getStorageSync('userId')
     wx.cloud.callFunction({
       name: "fastApptFunction",
@@ -130,7 +131,8 @@ Page({
         confirmDate: this.data.confirmDate,
         confirmTime: parseInt(this.data.confirmTime),
         confirmEquipment: this.data.confirmEquipment,
-        userId: userId
+        userId: userId,
+        alias: this.data.depAlias
       }
     }).then(res=>{
       console.log("onClickAppt:",res.result)
@@ -195,7 +197,6 @@ Page({
     wx.cloud.callFunction({
       name: "fastApptFunction",
       config: {
-
         env: "cloud1-5gukdsmgf9c78413"
       },
       data: {
@@ -210,7 +211,8 @@ Page({
         res.result.data[0].stock.forEach(element=>{busstime.push({"sec":element.busstime,"startTime": util.getHMData(this.data.dateSec,element.busstime),"endTime":util.getHMData(this.data.dateSec,element.endTime)})})
         this.setData({
           apptEquipment: res.result.data[0].equipment,
-          apptTime: busstime
+          apptTime: busstime,
+          depAlias: res.result.data[0].alias
         })
         console.log("getApptWares2",this.data.apptEquipment)
       } 

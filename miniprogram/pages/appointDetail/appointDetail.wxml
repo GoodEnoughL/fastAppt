@@ -8,12 +8,12 @@
 </van-panel> -->
 <view class="singleCard" style="margin-top: 10px;"> <van-cell title="选择日期" value="{{ date }}" bind:click="onDisplayCalendar" /> </view>
 
-<view class="singleCard">
+<view class="singleCard bigCard">
   <van-panel title="请选择时间"  >
   <view >
-  <view wx:if="{{apptTime && apptTime.length !== 0}}">
-    <block wx:for="{{apptTime}}" >
-      <van-button id="{{item.sec}}" type="default" bind:click="onClickTime">{{item.startTime}}-{{item.endTime}}</van-button>
+  <view wx:if="{{apptTime && apptTime.length !== 0}}" class="buttonList">
+    <block wx:for="{{apptTime}}" class="buttonItem">
+      <van-button id="{{item.sec}}" type="default" bind:click="onClickTime" hover-class="hoverButton">{{item.startTime}}-{{item.endTime}}</van-button>
     </block>
   </view>
   <van-empty wx:else image="error" description="当日没有时段可预约" />
@@ -21,11 +21,11 @@
 </van-panel>
 </view>
 
-<view class="singleCard">
+<view class="singleCard bigCard">
   <van-panel title="请选择设备" >
   <view>
-  <view wx:if="{{apptEquipment && apptEquipment.length !== 0}}">
-    <block wx:for="{{apptEquipment}}" >
+  <view wx:if="{{apptEquipment && apptEquipment.length !== 0}}" class="buttonList">
+    <block wx:for="{{apptEquipment}}" class="buttonItem">
       <van-button id="{{item}}" type="default" bind:click="onClickEquipment" >{{item}}</van-button>
     </block>
   </view>

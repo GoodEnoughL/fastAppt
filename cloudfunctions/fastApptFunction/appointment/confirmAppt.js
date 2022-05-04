@@ -50,7 +50,8 @@ exports.main = async (event, context) => {
             apptDate: event.confirmDate,
             appttime: event.confirmTime,
             equipment: event.confirmEquipment,
-            user: wxContext.OPENID
+            userId: userId,
+            alias: event.alias
         }
     })
     const result = {

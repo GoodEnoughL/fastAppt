@@ -7,4 +7,25 @@
   display: block;
   position: relative;
   margin-bottom: 10px;
+  
+}
+
+.bigCard {
+  min-height: 300px;
+  background-color: #ffffff;
+}
+
+.buttonList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.buttonItem {
+  margin: 10px 10px 10px 10px;
+}
+
+.hoverButton {
+  color: red;
 }
