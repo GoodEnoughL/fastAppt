@@ -19,12 +19,13 @@ exports.main = async (event, context) => {
     
     newStock.map(x=>{
         if(x.busstime == event.confirmTime && x.equipment == event.confirmEquipment){
+          if(Array.isArray(x.record) && x.record.indexOf(userId) !== -1){
+            throw new Error('您已预约该时段')
+          }
             if(x.surplus <= 0 ){
                 throw new Error('库存不足')
             }
-            if(Array.isArray(x.record) && x.record.indexOf(userId) !== -1){
-              throw new Error('已预约该时段')
-            }
+            
             else x.surplus--
             
             x.record.push(userId)
@@ -60,7 +61,7 @@ exports.main = async (event, context) => {
   catch(e) {
     const err = {
       status: 'fail',
-      reason: e
+      reason: e.message
     }
     return err
   }

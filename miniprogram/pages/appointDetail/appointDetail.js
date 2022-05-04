@@ -141,6 +141,12 @@ Page({
           url: url
         })
       }
+      else {
+        wx.showToast({
+          title: res.result.reason,
+          icon: 'error'
+        })
+      }
     },err=>{
       // wx.showToast({
       //   title: err,
