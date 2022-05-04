@@ -1,4 +1,5 @@
 // pages/appointDetail.js
+const util = require("../../util/index")
 Page({
 
   /**
@@ -191,7 +192,7 @@ Page({
       console.log("getApptWares",res)
       const busstime = []
       if(res.result.data[0]){
-        res.result.data[0].stock.forEach(element=>{busstime.push({"sec":element.busstime,"alias": this.getHMData(this.data.dateSec,element.busstime)})})
+        res.result.data[0].stock.forEach(element=>{busstime.push({"sec":element.busstime,"startTime": util.getHMData(this.data.dateSec,element.busstime),"endTime":util.getHMData(this.data.dateSec,element.endTime)})})
         this.setData({
           apptEquipment: res.result.data[0].equipment,
           apptTime: busstime
@@ -219,6 +220,5 @@ Page({
     // s = date.getSeconds()
     return h + m
 }
-
 
 })

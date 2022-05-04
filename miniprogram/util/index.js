@@ -1,8 +1,8 @@
 
 function getHMData(base,timestamp){
   const date = new Date(base+timestamp * 1000) // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    const h = `${date.getHours()}:`
-    const m = `${date.getMinutes()}`
+  var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
+  var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes());
     // s = date.getSeconds()
     return h + m
 }
@@ -27,7 +27,6 @@ function timestampToTime(timestamp) {
   var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
   var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes());
   var s = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds());
-
   let strDate = Y+M+D+h+m;
   return strDate;
 }
