@@ -90,9 +90,19 @@ Page({
       appointment.map(x=>{
         let ddes = parseInt(x.apptDate)+parseInt(x.appttime)*1000
         x.dateDes = timestampToTime(new Date(ddes)) 
-        if(nowTime < ddes) x.status = 'pendingAppt'
-        else if(nowTime >= ddes && nowTime < parseInt(x.apptDate) +( parseInt(x.appttime) + parseInt(x.apptEndTime)) *1000) x.status = 'runningAppt'
-        else x.status = 'expireAppt'
+        x.dateEndDes = timestampToTime(new Date(ddes+parseInt(x.apptEndTime)*1000)) 
+        if(nowTime < ddes) {
+          x.status = 'pendingAppt'
+          x.statusAlias = '未使用'
+        } 
+        else if(nowTime >= ddes && nowTime < parseInt(x.apptDate) +( parseInt(x.appttime) + parseInt(x.apptEndTime)) *1000) {
+          x.status = 'runningAppt'
+          x.statusAlias = '使用中'
+        }
+        else {
+          x.status = 'expireAppt'
+          x.statusAlias = '已过期'
+        }
       })
       this.setData({
         appointment: appointment   

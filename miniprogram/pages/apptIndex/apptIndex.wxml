@@ -3,11 +3,16 @@
 <view>
   <block wx:for="{{appointment}}" wx:key="{{dateDes}}">
     <view wx:if="{{status =='allAppt' || status == item.status }}" >
-      <van-card desc="{{item.dateDes}}" title="{{item.alias}}">
-        <view slot="footer" wx:if="{{status=='pendingAppt'}}">
+      <van-card  title="{{item.alias}}" tag="{{item.statusAlias}}" price="0.00">
+      <view slot="desc" style="font-size:small;">设备为：{{item.equipment}}</view>
+      <view slot="price-top">预约时间:{{item.dateDes}}至{{item.dateEndDes}}</view>
+        <view slot="footer" wx:if="{{item.status=='pendingAppt'}}">
           <van-button size="mini">取消</van-button>
         </view>
-        <view slot="footer" wx:if="{{status=='expireAppt'}}">
+        <view slot="footer" wx:if="{{item.status=='runningAppt'}}">
+          <van-button size="mini" disabled="{{true}}">使用中</van-button>
+        </view>
+        <view slot="footer" wx:if="{{item.status=='expireAppt'}}">
           <van-button size="mini">删除</van-button>
         </view>
       </van-card>
