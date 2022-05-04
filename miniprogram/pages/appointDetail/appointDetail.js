@@ -1,5 +1,6 @@
 // pages/appointDetail.js
 const util = require("../../util/index")
+const { envId } = require("../../envList")
 Page({
 
   /**
@@ -117,29 +118,37 @@ Page({
 
   onClickAppt: function() {
     console.log(this.data.confirmDate,this.data.confirmTime,this.data.confirmEquipment)
+    const userId = wx.getStorageSync('userId')
     wx.cloud.callFunction({
       name: "fastApptFunction",
       config: {
-        env: "cloud1-5gukdsmgf9c78413"
+        env: envId
       },
       data: {
         type: "confirmAppt",
         confirmName: this.data.dep,
         confirmDate: this.data.confirmDate,
         confirmTime: parseInt(this.data.confirmTime),
-        confirmEquipment: this.data.confirmEquipment
+        confirmEquipment: this.data.confirmEquipment,
+        userId: userId
       }
     }).then(res=>{
       console.log("onClickAppt:",res.result)
       const url = '/pages/apptSuccess/apptSuccess?status='+ res.result
       console.log("url:",url)
-      wx.navigateTo({
-        url: url
-      })
+      if(res.result.status === 'success'){
+        wx.navigateTo({
+          url: url
+        })
+      }
     },err=>{
-      wx.navigateTo({
-        url: '/pages/apptSuccess/apptSuccess?status=fail'
-      })
+      // wx.showToast({
+      //   title: err,
+      // })
+      console.log(err)
+      // wx.navigateTo({
+      //   url: '/pages/apptSuccess/apptSuccess?status=fail'
+      // })
     })
   },
 
@@ -213,12 +222,6 @@ Page({
   },
 
   
- getHMData: function(base,timestamp){
-  const date = new Date(base+timestamp * 1000) // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    const h = `${date.getHours()}:`
-    const m = `${date.getMinutes()}`
-    // s = date.getSeconds()
-    return h + m
-}
+
 
 })

@@ -14,14 +14,25 @@ exports.main = async (event, context) => {
       "bussdate": event.confirmDate,
     }).get()
     const newStock = res.data[0].stock
+    let record
+    const userId = event.userId
+    
     newStock.map(x=>{
         if(x.busstime == event.confirmTime && x.equipment == event.confirmEquipment){
-            if(x.surplus <= 0){
-                throw new Error()
+            if(x.surplus <= 0 ){
+                throw new Error('库存不足')
+            }
+            if(Array.isArray(x.record) && x.record.indexOf(userId) !== -1){
+              throw new Error('已预约该时段')
             }
             else x.surplus--
+            
+            x.record.push(userId)
         }
     })
+    
+    
+    
     db.collection("wares")
     .where({
       "name": event.confirmName,
@@ -41,9 +52,16 @@ exports.main = async (event, context) => {
             user: wxContext.OPENID
         }
     })
-    return "success"
+    const result = {
+      status: "success"
+    }
+    return result
   }
   catch(e) {
-    return "fail"
+    const err = {
+      status: 'fail',
+      reason: e
+    }
+    return err
   }
 };
