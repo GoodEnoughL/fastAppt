@@ -21,6 +21,7 @@ Page({
     equipment: [],
     confirmDate: 0,
     confirmTime: 0,
+    confirmEndTime: 0,
     confirmEquipment: ""
   },
 
@@ -105,8 +106,14 @@ Page({
   },
 
   onClickTime: function(options) {
+    console.log(options.currentTarget.id)
+    const time = options.currentTarget.id.split('-')
+    const startTime = parseInt(time[0])
+    const endTime = parseInt(time[1])
+    console.log(startTime,endTime)
     this.setData({
-      confirmTime: options.currentTarget.id
+      confirmTime: startTime,
+      confirmEndTime: endTime
     })
   },
 
@@ -130,6 +137,7 @@ Page({
         confirmName: this.data.dep,
         confirmDate: this.data.confirmDate,
         confirmTime: parseInt(this.data.confirmTime),
+        confirmEndTime: parseInt(this.data.confirmEndTime),
         confirmEquipment: this.data.confirmEquipment,
         userId: userId,
         alias: this.data.depAlias
@@ -139,9 +147,10 @@ Page({
       const url = '/pages/apptSuccess/apptSuccess?status='+ res.result
       console.log("url:",url)
       if(res.result.status === 'success'){
-        wx.navigateTo({
-          url: url
-        })
+        // wx.navigateTo({
+        //   url: url
+        // })
+        console.log(res.result.confirmEndTime)
       }
       else {
         wx.showToast({
@@ -171,7 +180,7 @@ Page({
     wx.cloud.callFunction({
       name: "fastApptFunction",
       config: {
-        env: "cloud1-5gukdsmgf9c78413"
+        env: envId
       },
       data: {
         type: "getApptConfig",
@@ -197,7 +206,7 @@ Page({
     wx.cloud.callFunction({
       name: "fastApptFunction",
       config: {
-        env: "cloud1-5gukdsmgf9c78413"
+        env: envId
       },
       data: {
         type: "getApptWares",
@@ -208,7 +217,7 @@ Page({
       console.log("getApptWares",res)
       const busstime = []
       if(res.result.data[0]){
-        res.result.data[0].stock.forEach(element=>{busstime.push({"sec":element.busstime,"startTime": util.getHMData(this.data.dateSec,element.busstime),"endTime":util.getHMData(this.data.dateSec,element.endTime)})})
+        res.result.data[0].stock.forEach(element=>{busstime.push({"sec":element.busstime,"endSec":element.endTime,"startTime": util.getHMData(this.data.dateSec,element.busstime),"endTime":util.getHMData(this.data.dateSec,element.endTime)})})
         this.setData({
           apptEquipment: res.result.data[0].equipment,
           apptTime: busstime,

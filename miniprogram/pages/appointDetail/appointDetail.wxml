@@ -13,7 +13,7 @@
   <view >
   <view wx:if="{{apptTime && apptTime.length !== 0}}" class="buttonList">
     <block wx:for="{{apptTime}}" class="buttonItem">
-      <van-button id="{{item.sec}}" type="default" bind:click="onClickTime" hover-class="hoverButton">{{item.startTime}}-{{item.endTime}}</van-button>
+      <van-button id="{{item.sec+'-'+item.endSec}}" type="default" bind:click="onClickTime" hover-class="hoverButton">{{item.startTime}}-{{item.endTime}}</van-button>
     </block>
   </view>
   <van-empty wx:else image="error" description="当日没有时段可预约" />

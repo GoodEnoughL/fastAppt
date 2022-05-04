@@ -7,6 +7,9 @@
         <view slot="footer" wx:if="{{status=='pendingAppt'}}">
           <van-button size="mini">取消</van-button>
         </view>
+        <view slot="footer" wx:if="{{status=='expireAppt'}}">
+          <van-button size="mini">删除</van-button>
+        </view>
       </van-card>
     </view>
   </block>

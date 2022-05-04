@@ -25,15 +25,12 @@ exports.main = async (event, context) => {
             if(x.surplus <= 0 ){
                 throw new Error('库存不足')
             }
-            
             else x.surplus--
-            
             x.record.push(userId)
         }
     })
     
-    
-    
+
     db.collection("wares")
     .where({
       "name": event.confirmName,
@@ -49,13 +46,14 @@ exports.main = async (event, context) => {
             department: event.confirmName,
             apptDate: event.confirmDate,
             appttime: event.confirmTime,
+            apptEndTime: event.confirmEndTime,
             equipment: event.confirmEquipment,
             userId: userId,
             alias: event.alias
         }
     })
     const result = {
-      status: "success"
+      status: "success",
     }
     return result
   }

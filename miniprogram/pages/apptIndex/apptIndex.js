@@ -1,6 +1,7 @@
 // pages/apptIndex/apptIndex.js
 // const { envId } = require("../../../cloudbaserc.json")
-
+const { envId } = require("../../envList")
+const { timestampToTime } = require("../../util/index")
 
 Page({
 
@@ -72,11 +73,10 @@ Page({
   },
   
    getApptIndex: async function (params) {
-   
     wx.cloud.callFunction({
       name: "fastApptFunction",
       config: {
-        env: "cloud1-5gukdsmgf9c78413"
+        env: envId
       },
       data: {
         type: "getApptIndex",
@@ -84,10 +84,12 @@ Page({
     }).then(res=>{
       console.log("getApptIndex",res)
       const appointment = res.result.data
+      const nowTime = Date.now()
       appointment.map(x=>{
         let ddes = parseInt(x.apptDate)+parseInt(x.appttime)*1000
-        x.dateDes =this.timestampToTime(new Date(ddes)) 
-        if(Date.now() > ddes) x.status = 'expireAppt'
+        x.dateDes = timestampToTime(new Date(ddes)) 
+        if(nowTime > ddes) x.status = 'expireAppt'
+        // else if(nowTime < ddes && nowTime >= parseInt(x.apptDate))
         else x.status = 'pendingAppt'
       })
       this.setData({
@@ -99,16 +101,16 @@ Page({
     })
   },
 
-  timestampToTime: function(timestamp) {
-    var date = new Date(timestamp);
-    var Y = date.getFullYear() + '-';
-    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-    var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
-    var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
-    var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ':';
-    var s = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds());
+//   timestampToTime: function(timestamp) {
+//     var date = new Date(timestamp);
+//     var Y = date.getFullYear() + '-';
+//     var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+//     var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
+//     var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
+//     var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ':';
+//     var s = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds());
     
-    let strDate = Y+M+D+h+m+s;
-    return strDate;
-}
+//     let strDate = Y+M+D+h+m+s;
+//     return strDate;
+// }
 })
