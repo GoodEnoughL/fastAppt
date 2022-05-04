@@ -9,7 +9,7 @@ exports.main = async (event, context) => {
   try {
     const wxContext = cloud.getWXContext();
     const res = await db.collection("appointment").where({
-      user: wxContext.OPENID
+      userId: event.userId
     }).get()
     
     return res

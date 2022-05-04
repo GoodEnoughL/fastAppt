@@ -73,6 +73,7 @@ Page({
   },
   
    getApptIndex: async function (params) {
+     const userId = wx.getStorageSync('userId')
     wx.cloud.callFunction({
       name: "fastApptFunction",
       config: {
@@ -80,6 +81,7 @@ Page({
       },
       data: {
         type: "getApptIndex",
+        userId: userId
       }
     }).then(res=>{
       console.log("getApptIndex",res)
@@ -88,9 +90,9 @@ Page({
       appointment.map(x=>{
         let ddes = parseInt(x.apptDate)+parseInt(x.appttime)*1000
         x.dateDes = timestampToTime(new Date(ddes)) 
-        if(nowTime > ddes) x.status = 'expireAppt'
-        // else if(nowTime < ddes && nowTime >= parseInt(x.apptDate))
-        else x.status = 'pendingAppt'
+        if(nowTime < ddes) x.status = 'pendingAppt'
+        else if(nowTime >= ddes && nowTime < parseInt(x.apptDate) +( parseInt(x.appttime) + parseInt(x.apptEndTime)) *1000) x.status = 'runningAppt'
+        else x.status = 'expireAppt'
       })
       this.setData({
         appointment: appointment   
