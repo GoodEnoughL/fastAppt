@@ -123,7 +123,7 @@ Page({
         env: envId
       },
       data: {
-        type: "apptDel",
+        type: "apptCancel",
         userId: userId,
         _id: _id
       }
@@ -131,7 +131,7 @@ Page({
       console.log('del:',res)
       this.getApptIndex()
       wx.showToast({
-        title: '删除成功',
+        title: '取消成功',
       })
     },err=>{
       console.log('delerr:',err)
