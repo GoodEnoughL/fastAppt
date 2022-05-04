@@ -1,5 +1,5 @@
 var db = wx.cloud.database();
-
+const { timestampToTime } = require('../../../util/index')
 Page({
   /**
  * 页面的初始数据
@@ -17,6 +17,10 @@ Page({
     var _ = db.command;
     db.collection("topic").get({
       success: function success(res) {
+        console.log('time:',res.data)
+        res.data && res.data.map(x=>{
+          x.topicTime =  timestampToTime(x.topicTime)
+        })
         _this.setData({
           topic: res.data
         });
