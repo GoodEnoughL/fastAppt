@@ -12,7 +12,10 @@
     "pages/Topic/Topic/Topic",
     "pages/index/index",
     
-
+    "pages/admin/index/index",
+    "pages/admin/topic/index/index",
+    "pages/admin/user/index/index",
+    "pages/admin/user/upUser/upUser",
 
     
     "pages/forum/forum",

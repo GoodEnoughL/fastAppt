@@ -4,7 +4,7 @@
             <view class="setBoxBtn">
                 <button bindtap="clearStorage" type="primary">退出登录</button>
             </view>
-            <view hidden="{{isAdmin}}">
+            <view >
                 <view style="margin-top:50rpx;">
                     <button bindtap="intoAdmin" type="primary">管理中心</button>
                 </view>
