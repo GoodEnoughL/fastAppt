@@ -3,6 +3,7 @@
 const { envId } = require("../../envList")
 const { timestampToTime } = require("../../util/index")
 
+
 Page({
 
   /**
@@ -95,7 +96,7 @@ Page({
           x.status = 'pendingAppt'
           x.statusAlias = '未使用'
         } 
-        else if(nowTime >= ddes && nowTime < parseInt(x.apptDate) +( parseInt(x.appttime) + parseInt(x.apptEndTime)) *1000) {
+        else if(nowTime >= ddes && nowTime < parseInt(x.apptDate) + parseInt(x.apptEndTime)*1000) {
           x.status = 'runningAppt'
           x.statusAlias = '使用中'
         }
@@ -113,16 +114,51 @@ Page({
     })
   },
 
-//   timestampToTime: function(timestamp) {
-//     var date = new Date(timestamp);
-//     var Y = date.getFullYear() + '-';
-//     var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-//     var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
-//     var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
-//     var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ':';
-//     var s = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds());
-    
-//     let strDate = Y+M+D+h+m+s;
-//     return strDate;
-// }
+  onClickCancel: function onClickCancel(params) {
+    const userId = wx.getStorageSync('userId')
+    const _id = options.currentTarget.id
+    wx.cloud.callFunction({
+      name: "fastApptFunction",
+      config: {
+        env: envId
+      },
+      data: {
+        type: "apptDel",
+        userId: userId,
+        _id: _id
+      }
+    }).then(res=>{
+      console.log('del:',res)
+      this.getApptIndex()
+      wx.showToast({
+        title: '删除成功',
+      })
+    },err=>{
+      console.log('delerr:',err)
+    })
+  },
+
+  onClickDel: function onClickDel(options) {
+    const userId = wx.getStorageSync('userId')
+    const _id = options.currentTarget.id
+    wx.cloud.callFunction({
+      name: "fastApptFunction",
+      config: {
+        env: envId
+      },
+      data: {
+        type: "apptDel",
+        userId: userId,
+        _id: _id
+      }
+    }).then(res=>{
+      console.log('del:',res)
+      this.getApptIndex()
+      wx.showToast({
+        title: '删除成功',
+      })
+    },err=>{
+      console.log('delerr:',err)
+    })
+  }
 })

@@ -37,14 +37,14 @@
           <text>待进入</text>
           <text class='num-badge' wx:if="{{orderAmount.unPay>0}}">{{orderAmount.unPay}}</text>
         </view>
+        <view class='items' id="fulfilledAppt" bindtap='toOrderListPage' data-sts="5">
+          <image src='../../images/icon/toComment.png'></image>
+          <text>进行中</text>
+        </view>
         <view class='items' id="expireAppt" bindtap='toOrderListPage' data-sts="3">
           <image src='../../images/icon/toTake.png'></image>
           <text>已过期</text>
           <text class='num-badge' wx:if="{{orderAmount.consignment>0}}">{{orderAmount.consignment}}</text>
-        </view>
-        <view class='items' id="fulfilledAppt" bindtap='toOrderListPage' data-sts="5">
-          <image src='../../images/icon/toComment.png'></image>
-          <text>已完成</text>
         </view>
       </view>
     </view>
