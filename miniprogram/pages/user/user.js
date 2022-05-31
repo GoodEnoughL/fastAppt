@@ -1,6 +1,7 @@
 // pages/user/user.js
 
 //var http = require("../../utils/http.js");
+const { envId } = require("../../envList")
 Page({
 
   /**
@@ -9,14 +10,31 @@ Page({
   data: {
     orderAmount: '',
     sts: '',
-    collectionCount: 0
+    collectionCount: 0,
+    userInfoGridStatus: "false",
+    openid: "",
+    userName: "",
+    isHide: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    // 获得当前用户openid，如果当前用户曾经登录，则直接从本地缓存拉取资料
+    this.getOpenid();
+    var openid = this.data.openid,
+    userId = wx.getStorageSync("userId"), 
+    userImg = wx.getStorageSync("userImg"), 
+    userName = wx.getStorageSync("userName");
+    if (userId) {
+      this.setData({
+        isHide: false,
+        userName: userName,
+        userImg: userImg,
+        userId: userId
+      });
+    }
   },
 
   /**
@@ -67,26 +85,13 @@ Page({
 
   },
 
-  toDistCenter: function () {
-    wx.showToast({
-      icon: "none",
-      title: '该功能未开源'
-    })
+  onSetClick: function onSetClick() {
+    wx.navigateTo({
+      url: "/pages/set/index/index"
+    });
   },
 
-  toCouponCenter: function() {
-    wx.showToast({
-      icon: "none",
-      title: '该功能未开源'
-    })
-  },
-
-  toMyCouponPage: function() {
-    wx.showToast({
-      icon: "none",
-      title: '该功能未开源'
-    })
-  },
+  
 
   toAddressList: function() {
     wx.navigateTo({
@@ -94,17 +99,13 @@ Page({
     })
   },
 
-  // 跳转绑定手机号
-  toBindingPhone: function() {
-    wx.navigateTo({
-      url: '/pages/binding-phone/binding-phone',
-    })
-  },
 
   toOrderListPage: function(e) {
     var sts = e.currentTarget.dataset.sts;
+    console.log("toOrderListPage:",e)
+    const url = '/pages/apptIndex/apptIndex?status=' + e.currentTarget.id
     wx.navigateTo({
-      url: '/pages/orderList/orderList?sts=' + sts,
+      url: url
     })
   },
   /**
@@ -139,7 +140,108 @@ Page({
     wx.navigateTo({
       url: url
     })
-  }
+  },
+
+
+
+  //授权
+  getUserInfoClick: function getUserInfoClick(e) {
+    console.log("getUserInfoClick:",e)
+    var _this = this;
+    var d = e.detail.userInfo;
+    var db = wx.cloud.database({env:"cloud1-5gukdsmgf9c78413"});
+    var _ = db.command;
+    wx.setStorageSync("userName", d.nickName);
+    wx.setStorageSync("userImg", d.avatarUrl);
+    // console.log()
+    db.collection("user").where({
+      openId: this.data.openid
+    }).get({
+      success: function success(res) {
+        console.log("查询用户:", res);
+        if (res.data && res.data.length > 0) {
+          console.log("已存在");
+          wx.setStorageSync("userId", res.data[0].userId);
+          wx.setStorageSync("openId", res.data[0].openid);
+          
+          _this.setData({
+            userImg: d.avatarUrl,    
+            userName: d.nickName,
+            isHide: false
+          });
+          // console.log(":dd",d)
+          // console.log(res.data[0].userId);
+        } 
+        else {
+          wx.navigateTo({
+            url: '/pages/login/login',
+          })
+          // setTimeout(function () {
+          //   var userImg = d.avatarUrl,
+          //     userName = d.userName,
+          //     userId;
+          //   if (!userId) {
+          //     userId = _this.getUserId();
+          //   }
+          //   wx.cloud.callFunction({
+          //     name: 'addUser',
+          //     data: {
+          //       userId: userId,
+          //       userImg: userImg,
+          //       userName: userName,
+          //     },
+          //     success: function success(res) {
+          //       wx.showToast({
+          //         title: "注册成功"
+          //       });
+          //       console.log('云addUser: ', res,res.result.openid)
+          //       console.log("用户新增成功");
+          //       db.collection("users").where({
+          //         userId: userId
+          //       }).get({
+          //         success: function success(res) {
+          //           wx.setStorageSync("openId", res.data[0]._openid);
+          //         },
+          //         fail: function fail(err) {
+          //           console.log("openId缓存失败");
+          //         }
+          //       });
+          //     }
+          //   });
+          // }, 100);
+        }
+      }
+    });
+    this.onLoad();
+  },
+  // 获取用户openid
+  getOpenid: function getOpenid() {
+    var _this2 = this;
+    // let that = this;
+    wx.cloud.callFunction({
+      name: "getOpenId",
+      config: {
+        env: "cloud1-5gukdsmgf9c78413"
+      },
+      complete: function complete(res) {
+        // console.log("云函数获取到的openid: ", res);
+        var openid = res.result.openid;
+        _this2.setData({
+          openid: openid
+        });
+        console.log(_this2.data.openid);
+      }
+    });
+  },
+  getUserId: function getUserId() {
+    // var w = "abcdefghijklmnopqrstuvwxyz0123456789",
+    //   firstW = w[parseInt(Math.random() * (w.length))];
+    var firstW = "user";
+    var userId = firstW + Date.now() + (Math.random() * 1e5).toFixed(0);
+    console.log(userId);
+    wx.setStorageSync("userId", userId);
+    return userId;
+  },
 
 
 })

@@ -1,18 +1,22 @@
-// pages/apptSuccess/apptSuccess.js
+// pages/successAppt.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    status: "fail"
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log("susonload:",options)
+    this.setData({
+      status: options.status
+    })
+    console.log(this.data.status)
   },
 
   /**
@@ -26,7 +30,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
   },
 
   /**

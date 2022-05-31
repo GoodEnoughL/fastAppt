@@ -1,4 +1,6 @@
 // pages/appointDetail.js
+const util = require("../../util/index")
+const { envId } = require("../../envList")
 Page({
 
   /**
@@ -11,6 +13,7 @@ Page({
     showCalendar: false,
     apptTime: [],
     apptEquipment: [],
+    depAlias: '',
     minDate: "",
     maxDate: "",
     defaultDate: "",
@@ -18,7 +21,10 @@ Page({
     equipment: [],
     confirmDate: 0,
     confirmTime: 0,
-    confirmEquipment: ""
+    confirmEndTime: 0,
+    confirmEquipment: "",
+    apptData: {},
+    surplus: 0
   },
 
   /**
@@ -102,41 +108,78 @@ Page({
   },
 
   onClickTime: function(options) {
-    this.setData({
-      confirmTime: options.currentTarget.id
-    })
+    console.log(options.currentTarget.id)
+    const time = options.currentTarget.id.split('-')
+    const startTime = parseInt(time[0])
+    const endTime = parseInt(time[1])
+    console.log(startTime,endTime)
+    console.log(`apptData${this.data.apptData.stock},id:${options.currentTarget.id}`,this.data.apptData)
+    for(let key in this.data.apptData.stock)
+    {
+      var equipment = []
+      console.log(`equipment:${this.data.apptData.stock[key].equipment}`)
+      if(this.data.apptData.stock[key].busstime === startTime && this.data.apptData.stock[key].endTime === endTime){
+        equipment.push(this.data.apptData.stock[key].equipment)
+        this.setData({
+          confirmTime: startTime,
+          confirmEndTime: endTime,
+          apptEquipment: equipment,
+          surplus: this.data.apptData.stock[key].surplus
+        })
+      }
+    }
+    console.log(`equipment:${this.data.apptEquipment}`)
   },
 
   onClickEquipment: function(options) {
     this.setData({
       confirmEquipment: options.currentTarget.id
     })
-    console.log(this.data.confirmDate,this.data.confirmTime,this.data.confirmEquipment)
+    //console.log(this.data.confirmDate,this.data.confirmTime,this.data.confirmEquipment)
   },
 
   onClickAppt: function() {
-    console.log(this.data.confirmDate,this.data.confirmTime,this.data.confirmEquipments)
+    console.log("clicj",this.data)
+    const userId = wx.getStorageSync('userId')
     wx.cloud.callFunction({
       name: "fastApptFunction",
       config: {
-        env: "cloud1-5gukdsmgf9c78413"
+        env: envId
       },
       data: {
         type: "confirmAppt",
         confirmName: this.data.dep,
         confirmDate: this.data.confirmDate,
-        confirmTime: this.data.confirmTime,
-        confirmEquipment: this.data.confirmEquipment
+        confirmTime: parseInt(this.data.confirmTime),
+        confirmEndTime: parseInt(this.data.confirmEndTime),
+        confirmEquipment: this.data.confirmEquipment,
+        userId: userId,
+        alias: this.data.depAlias
       }
     }).then(res=>{
-      console.log(res)
-      wx.navigateTo({
-        url: '/pages/apptSuccess/apptSuccess',
-      })
+      console.log("onClickAppt:",res.result)
+      const url = '/pages/apptSuccess/apptSuccess?status='+ res.result.status
+      console.log("url:",url)
+      if(res.result.status === 'success'){
+        wx.navigateTo({
+          url: url
+        })
+        // console.log(res.result.confirmEndTime)
+      }
+      else {
+        wx.showToast({
+          title: res.result.reason,
+          icon: 'error'
+        })
+      }
     },err=>{
-      wx.navigateTo({
-        url: '/pages/apptSuccess/apptSuccess',
-      })
+      // wx.showToast({
+      //   title: err,
+      // })
+      console.log(err)
+      // wx.navigateTo({
+      //   url: '/pages/apptSuccess/apptSuccess?status=fail'
+      // })
     })
   },
 
@@ -144,16 +187,14 @@ Page({
 
 
   getEquipmentInfo: function() {
-    // wx.cloud.callFunction({
-    //   name: ""
-    // })
+
   },
 
   getApptConfig: function() {
     wx.cloud.callFunction({
       name: "fastApptFunction",
       config: {
-        env: "cloud1-5gukdsmgf9c78413"
+        env: envId
       },
       data: {
         type: "getApptConfig",
@@ -168,7 +209,6 @@ Page({
         minDate: today,
         maxDate: d
       })
-
     },err=>{
       console.log("err",err)
     })
@@ -179,23 +219,25 @@ Page({
     wx.cloud.callFunction({
       name: "fastApptFunction",
       config: {
-
-        env: "cloud1-5gukdsmgf9c78413"
+        env: envId
       },
       data: {
         type: "getApptWares",
         waresName: this.data.dep,
-        dateName: this.data.dateSec
+        dateName: parseInt(this.data.dateSec)
       } 
     }).then(res=>{
-      console.log(res)
+      console.log("getApptWares",res)
       const busstime = []
       if(res.result.data[0]){
-        res.result.data[0].stock.forEach(element=>{busstime.push({"sec":element.busstime,"alias": this.getHMData(this.data.dateSec,element.busstime)})})
+        res.result.data[0].stock.forEach(element=>{busstime.push({"sec":element.busstime,"endSec":element.endTime,"startTime": util.getHMData(this.data.dateSec,element.busstime),"endTime":util.getHMData(this.data.dateSec,element.endTime)})})
         this.setData({
-          apptEquipment: Array.from(res.result.data[0].equipment),
-          apptTime: busstime
+          // apptEquipment: res.result.data[0].equipment,
+          apptTime: busstime,
+          depAlias: res.result.data[0].alias,
+          apptData: res.result.data[0]
         })
+        console.log("getApptWares2",this.data.apptData)
       } 
       else {
         this.setData({
@@ -211,13 +253,6 @@ Page({
   },
 
   
- getHMData: function(base,timestamp){
-  const date = new Date(base+timestamp * 1000) // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    const h = `${date.getHours()}:`
-    const m = `${date.getMinutes()}`
-    // s = date.getSeconds()
-    return h + m
-}
 
 
 })

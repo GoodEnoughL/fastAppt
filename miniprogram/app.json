@@ -1,18 +1,35 @@
 {
   "pages": [
     "pages/appointment/appointment",
-    "pages/index/index",
     "pages/user/user",
+    
+    "pages/login/login",
+    
+    "pages/set/index/index",
+    "pages/about/meAbout/meAbout",
+    "pages/Topic/index/index",
+    "pages/Topic/oneTopic/oneTopic",
+    "pages/Topic/addTopic/addTopic",
+    "pages/Topic/Topic/Topic",
+    "pages/index/index",
+    
+    "pages/admin/index/index",
+    "pages/admin/topic/index/index",
+    "pages/admin/user/index/index",
+    "pages/admin/user/upUser/upUser",
+
+    
     "pages/forum/forum",
     "pages/appointDetail/appointDetail",
     "pages/successAppt/successAppt",
-    "pages/apptSuccess/apptSuccess"
+    "pages/apptSuccess/apptSuccess",
+    "pages/apptIndex/apptIndex"
   ],
   "window": {
-    "backgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "快预约系统",
+    "backgroundColor": "#2d8cf0",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "快预约系统",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -33,7 +50,7 @@
         "selectedIconPath": "/images/tabbar/news_cur.png"
       },
       {
-        "pagePath": "pages/forum/forum",
+        "pagePath": "pages/Topic/index/index",
         "text": "发现",
         "iconPath": "/images/tabbar/user.png",
         "selectedIconPath": "/images/tabbar/user_cur.png"
@@ -47,6 +64,7 @@
     ]
   },
   "sitemapLocation": "sitemap.json",
+  
   "useExtendedLib": {
     "weui": true
   }

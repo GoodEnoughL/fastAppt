@@ -93,11 +93,9 @@ Page({
           type: 'indexPic'
         }
       }).then((res)=>{
-        console.log("index1:",res.result)
         this.setData({
           backgroundData: res.result.res.data[0].picurl
         })
-        console.log("indexPic:",this.data.backgroundData)
       },err=>{
         console.log(err)
       })
@@ -127,7 +125,6 @@ Page({
           type: 'depPic'
         }
       }).then((res)=>{
-        console.log(res.result.res.data)
         let arr = []
         Array.isArray(res.result.res.data) && res.result.res.data.forEach(element => {
           arr.push(element.picurl[0])
@@ -135,7 +132,6 @@ Page({
         this.setData({
           departmentPic: arr
         })
-        console.log("depPic:",this.data.departmentPic)
       },err=>{
         console.log(err)
       })

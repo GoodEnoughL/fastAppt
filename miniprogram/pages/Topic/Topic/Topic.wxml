@@ -1,0 +1,20 @@
+<l-card lClass="card" plaintext="true" type="primary">
+    <view>
+        <view class="topicUserInfo">
+            <view>
+                <image class="topicUserInfoImg" mode="aspectFit" src="{{topicUserImg}}"></image>
+            </view>
+            <view class="topicUserInfoNAT">
+                <text class="topicUserInfoName">{{topicUserName}}</text>
+                <text class="topicUserInfoTime">{{topicTime}}</text>
+            </view>
+        </view>
+        <view class="topicItem">{{topicItem}}</view>
+        <view>
+            <view class="topicContainer">
+                <l-icon color="#666" name="default" size="28" style="margin-right:10rpx;"></l-icon>
+                <view class="topicContainerNum">{{topicCommentNum}}</view>
+            </view>
+        </view>
+    </view>
+</l-card>
