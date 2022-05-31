@@ -53,16 +53,16 @@
     <view class="prod-col">
       <view class="col-item" bindtap='myCollectionHandle'>
         <view class="num">{{collectionCount}}</view>
-        <view class="tit">我的收藏</view>
+        <view class="tit">我的帖子</view>
       </view>
       <view class="col-item">
         <view class="num">5</view>
-        <view class="tit">我的消息</view>
+        <view class="tit">我的评论</view>
       </view>
-      <view class="col-item">
+      <!-- <view class="col-item">
         <view class="num">3</view>
         <view class="tit">我的足迹</view>
-      </view>
+      </view> -->
     </view>
 
     

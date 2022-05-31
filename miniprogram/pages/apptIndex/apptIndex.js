@@ -114,9 +114,10 @@ Page({
     })
   },
 
-  onClickCancel: function onClickCancel(params) {
+  onClickCancel: function onClickCancel(options) {
     const userId = wx.getStorageSync('userId')
     const _id = options.currentTarget.id
+    console.log(`eventId:${_id}`)
     wx.cloud.callFunction({
       name: "fastApptFunction",
       config: {
@@ -129,10 +130,17 @@ Page({
       }
     }).then(res=>{
       console.log('del:',res)
-      this.getApptIndex()
-      wx.showToast({
-        title: '取消成功',
-      })
+      if(res.result.status && res.result.status === 'success'){
+        this.getApptIndex()
+        wx.showToast({
+          title: '取消成功',
+        })
+      } else {
+        wx.showToast({
+          title: 'fail',
+        })
+      }
+      
     },err=>{
       console.log('delerr:',err)
     })

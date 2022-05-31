@@ -16,20 +16,11 @@ exports.main = async (event, context) => {
     const newStock = res.data[0].stock
     let record
     const userId = event.userId
-    const appt = await db.collection("appointment").where({
-      department: event.confirmName,
-      apptDate: event.confirmDate,
-      appttime: event.confirmTime,
-      apptEndTime: event.confirmEndTime,
-      equipment: event.confirmEquipment,
-      userId: userId,
-    }).get()
-    if(Array.isArray(appt) && appt.length > 0){
-      throw new Error('您已预约该时段')
-    }
     newStock.map(x=>{
         if(x.busstime == event.confirmTime && x.equipment == event.confirmEquipment){
-          
+          if(Array.isArray(x.record) && x.record.indexOf(userId) !== -1){
+            throw new Error('您已预约该时段')
+          }
             if(x.surplus <= 0 ){
                 throw new Error('库存不足')
             }

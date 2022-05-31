@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
   try {
     const today = toUTC8DateZone(getLocaleDateZone())
     db.collection("wares").add({
-        data:{"alias":"篮球馆","bussdate":today,"name":"basket","record":[{"busstime":68400,"equipment":{"A1":[]}},{"busstime":70200,"equipment":{"A1":[]}},{"busstime":72000,"equipment":{"A1":[]}},{"busstime":73800,"equipment":{"A1":[]}}],"stock":[{"busstime":68400,"equipment":"A1","surplus":2},{"busstime":70200,"equipment":"A1","surplus":2},{"busstime":72000,"equipment":"A1","surplus":2},{"busstime":73800,"equipment":"A1","surplus":2}],"equipment":["A1"]}
+        data:{"alias":"篮球馆","bussdate":today,"name":"basket","stock":[{"busstime":68400,"endTime":70200,"equipment":"A1","surplus":5,"record":[]},{"busstime":70200,"endTime":72000,"equipment":"A1","surplus":0,"record":[]},{"busstime":72000,"endTime":73800,"equipment":"A1","surplus":0,"record":[]},{"busstime":73800,"endTime":75600,"equipment":"A1","surplus":2,"record":[]}],"equipment":["A1"]}
     })
     db.collection("wares").where({
       bussdate: _.lt(today)

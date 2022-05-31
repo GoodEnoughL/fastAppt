@@ -17,7 +17,7 @@ Page({
     var _ = db.command;
     db.collection("topic").get({
       success: function success(res) {
-        console.log('time:',res.data)
+        console.log(res)
         res.data && res.data.map(x=>{
           x.topicTime =  timestampToTime(x.topicTime)
         })
@@ -49,7 +49,7 @@ Page({
   onTopicDel: function onTopicDel(e) {
     var _this2 = this;
     var id = e.currentTarget.dataset.id;
-    console.log(id)
+    console.log('id:',id)
     console.log(e)
     db.collection("topic").where({
       _id: id
@@ -110,6 +110,7 @@ Page({
       }
     })
   },
+  
   // 跳转修改用户
   onUserUpdate: function onUserUpdate(e) {
     var id = e.currentTarget.dataset.id;

@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/user/user",
     "pages/appointment/appointment",
+    "pages/user/user",
+    
     "pages/login/login",
     
     "pages/set/index/index",

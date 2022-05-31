@@ -22,7 +22,9 @@ Page({
     confirmDate: 0,
     confirmTime: 0,
     confirmEndTime: 0,
-    confirmEquipment: ""
+    confirmEquipment: "",
+    apptData: {},
+    surplus: 0
   },
 
   /**
@@ -111,10 +113,22 @@ Page({
     const startTime = parseInt(time[0])
     const endTime = parseInt(time[1])
     console.log(startTime,endTime)
-    this.setData({
-      confirmTime: startTime,
-      confirmEndTime: endTime
-    })
+    console.log(`apptData${this.data.apptData.stock},id:${options.currentTarget.id}`,this.data.apptData)
+    for(let key in this.data.apptData.stock)
+    {
+      var equipment = []
+      console.log(`equipment:${this.data.apptData.stock[key].equipment}`)
+      if(this.data.apptData.stock[key].busstime === startTime && this.data.apptData.stock[key].endTime === endTime){
+        equipment.push(this.data.apptData.stock[key].equipment)
+        this.setData({
+          confirmTime: startTime,
+          confirmEndTime: endTime,
+          apptEquipment: equipment,
+          surplus: this.data.apptData.stock[key].surplus
+        })
+      }
+    }
+    console.log(`equipment:${this.data.apptEquipment}`)
   },
 
   onClickEquipment: function(options) {
@@ -144,13 +158,13 @@ Page({
       }
     }).then(res=>{
       console.log("onClickAppt:",res.result)
-      const url = '/pages/apptSuccess/apptSuccess?status='+ res.result
+      const url = '/pages/apptSuccess/apptSuccess?status='+ res.result.status
       console.log("url:",url)
       if(res.result.status === 'success'){
-        // wx.navigateTo({
-        //   url: url
-        // })
-        console.log(res.result.confirmEndTime)
+        wx.navigateTo({
+          url: url
+        })
+        // console.log(res.result.confirmEndTime)
       }
       else {
         wx.showToast({
@@ -195,7 +209,6 @@ Page({
         minDate: today,
         maxDate: d
       })
-
     },err=>{
       console.log("err",err)
     })
@@ -219,11 +232,12 @@ Page({
       if(res.result.data[0]){
         res.result.data[0].stock.forEach(element=>{busstime.push({"sec":element.busstime,"endSec":element.endTime,"startTime": util.getHMData(this.data.dateSec,element.busstime),"endTime":util.getHMData(this.data.dateSec,element.endTime)})})
         this.setData({
-          apptEquipment: res.result.data[0].equipment,
+          // apptEquipment: res.result.data[0].equipment,
           apptTime: busstime,
-          depAlias: res.result.data[0].alias
+          depAlias: res.result.data[0].alias,
+          apptData: res.result.data[0]
         })
-        console.log("getApptWares2",this.data.apptEquipment)
+        console.log("getApptWares2",this.data.apptData)
       } 
       else {
         this.setData({

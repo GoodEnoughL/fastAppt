@@ -12,9 +12,12 @@
   <van-panel title="请选择时间"  >
   <view >
   <view wx:if="{{apptTime && apptTime.length !== 0}}" class="buttonList">
-    <block wx:for="{{apptTime}}" class="buttonItem">
-      <van-button id="{{item.sec+'-'+item.endSec}}" type="default" bind:click="onClickTime" hover-class="hoverButton">{{item.startTime}}-{{item.endTime}}</van-button>
+    <van-row gutter="20">
+      <block wx:for="{{apptTime}}" class="buttonItem">
+        <van-col span="8"><van-button id="{{item.sec+'-'+item.endSec}}" type="default" bind:click="onClickTime" hover-class="hoverButton">{{item.startTime}}-{{item.endTime}}</van-button></van-col>
     </block>
+    </van-row>
+    
   </view>
   <van-empty wx:else image="error" description="当日没有时段可预约" />
 </view>
@@ -25,9 +28,11 @@
   <van-panel title="请选择设备" >
   <view>
   <view wx:if="{{apptEquipment && apptEquipment.length !== 0}}" class="buttonList">
+    <van-row gutter="20">
     <block wx:for="{{apptEquipment}}" class="buttonItem">
-      <van-button id="{{item}}" type="default" bind:click="onClickEquipment" >{{item}}</van-button>
+      <van-col ><van-button id="{{item}}" type="default" bind:click="onClickEquipment" >{{item}}  (剩余{{surplus}})</van-button></van-col>
     </block>
+  </van-row>
   </view>
   <view wx:else> <van-empty  image="error" description="当日没有设备可预约" /> </view>
  </view>
